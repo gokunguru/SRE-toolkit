@@ -4,3 +4,9 @@
   become: yes
   roles:
     - common
+
+- name: Apply monitoring role to monitoring hosts
+  hosts: _monitoring
+  become: yes
+  roles:
+    - monitoring
