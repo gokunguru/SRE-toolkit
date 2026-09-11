@@ -88,3 +88,29 @@
     name: grafana-server
     enabled: yes
     state: started
+- name: Deploy Grafana datasource provisioning
+  template:
+    src: datasource.yml.j2
+    dest: /etc/grafana/provisioning/datasources/prometheus.yml
+  notify: restart grafana
+
+- name: Deploy Grafana dashboard provider config
+  template:
+    src: dashboard-provider.yml.j2
+    dest: /etc/grafana/provisioning/dashboards/default.yml
+  notify: restart grafana
+
+- name: Create dashboards directory
+  file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+    owner: grafana
+    group: grafana
+
+- name: Download node_exporter dashboard (ID 1860)
+  get_url:
+    url: https://grafana.com/api/dashboards/1860/revisions/37/download
+    dest: /var/lib/grafana/dashboards/node-exporter.json
+    owner: grafana
+    group: grafana
+  notify: restart grafana
