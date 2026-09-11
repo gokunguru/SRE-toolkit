@@ -1,5 +1,5 @@
 resource "aws_instance" "app" {
-  ami           = var.ami_id
+  ami = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
   key_name      = var.key_name
   vpc_security_group_ids = [aws_security_group.app_sg.id]
@@ -7,7 +7,7 @@ resource "aws_instance" "app" {
 }
 
 resource "aws_instance" "loadbalancer" {
-  ami           = var.ami_id
+  ami = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
   key_name      = var.key_name
   vpc_security_group_ids = [aws_security_group.lb_sg.id]
@@ -15,7 +15,7 @@ resource "aws_instance" "loadbalancer" {
 }
 
 resource "aws_instance" "monitoring" {
-  ami           = var.ami_id
+  ami = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
   key_name      = var.key_name
   vpc_security_group_ids = [aws_security_group.monitoring_sg.id]
