@@ -1,0 +1,41 @@
+---
+- name: Install Python and pip
+  apt:
+    name:
+      - python3
+      - python3-venv
+      - python3-pip
+    state: present
+
+- name: Create app directory
+  file:
+    path: /opt/app
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+
+- name: Copy application code
+  copy:
+    src: app.py
+    dest: /opt/app/app.py
+    owner: ubuntu
+    group: ubuntu
+
+- name: Create virtualenv and install Flask
+  pip:
+    name: flask
+    virtualenv: /opt/app/venv
+    virtualenv_command: python3 -m venv
+
+- name: Deploy systemd unit for the app
+  template:
+    src: app.service.j2
+    dest: /etc/systemd/system/sre-app.service
+  notify: restart app
+
+- name: Enable and start the app
+  systemd:
+    name: sre-app
+    enabled: yes
+    state: started
+    daemon_reload: yes

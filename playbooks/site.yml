@@ -5,7 +5,19 @@
   roles:
     - common
 
-- name: Apply monitoring role to monitoring hosts
+- name: Apply app role
+  hosts: _app
+  become: yes
+  roles:
+    - app
+
+- name: Apply loadbalancer role
+  hosts: _loadbalancer
+  become: yes
+  roles:
+    - loadbalancer
+
+- name: Apply monitoring role
   hosts: _monitoring
   become: yes
   roles:

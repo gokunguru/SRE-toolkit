@@ -13,6 +13,12 @@ resource "aws_security_group" "app_sg" {
     protocol    = "tcp"
     security_groups = [aws_security_group.monitoring_sg.id]
   }
+  ingress {
+  from_port       = 5000
+  to_port         = 5000
+  protocol        = "tcp"
+  security_groups = [aws_security_group.lb_sg.id]
+}
   egress {
     from_port   = 0
     to_port     = 0

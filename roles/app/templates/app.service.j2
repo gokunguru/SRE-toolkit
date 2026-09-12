@@ -1,0 +1,13 @@
+[Unit]
+Description=SRE Toolkit Demo App
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/opt/app
+ExecStart=/opt/app/venv/bin/python /opt/app/app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

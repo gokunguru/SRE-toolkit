@@ -1,0 +1,15 @@
+upstream app_backend {
+{% for host in groups['_app'] %}
+    server {{ host }}:5000;
+{% endfor %}
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://app_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
