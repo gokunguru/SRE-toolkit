@@ -62,6 +62,63 @@
     state: started
     daemon_reload: yes
 
+- name: Deploy alert rules
+  copy:
+    src: alert_rules.yml
+    dest: /etc/prometheus/alert_rules.yml
+    owner: prometheus
+    group: prometheus
+  notify: restart prometheus
+
+- name: Create alertmanager directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: prometheus
+    group: prometheus
+  loop:
+    - /etc/alertmanager
+    - /var/lib/alertmanager
+
+- name: Download and extract Alertmanager
+  unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v0.27.0/alertmanager-0.27.0.linux-amd64.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Install alertmanager binaries
+  copy:
+    src: "/tmp/alertmanager-0.27.0.linux-amd64/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+  loop:
+    - alertmanager
+    - amtool
+
+- name: Deploy alertmanager config
+  template:
+    src: alertmanager.yml.j2
+    dest: /etc/alertmanager/alertmanager.yml
+    owner: prometheus
+    group: prometheus
+  notify: restart alertmanager
+
+- name: Deploy alertmanager systemd unit
+  template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+  notify: restart alertmanager
+
+- name: Enable and start alertmanager
+  systemd:
+    name: alertmanager
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
 # --- Grafana ---
 - name: Add Grafana APT key
   get_url:
