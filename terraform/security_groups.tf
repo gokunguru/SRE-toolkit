@@ -8,17 +8,17 @@ resource "aws_security_group" "app_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 9100
-    to_port     = 9100
-    protocol    = "tcp"
+    from_port       = 9100
+    to_port         = 9100
+    protocol        = "tcp"
     security_groups = [aws_security_group.monitoring_sg.id]
   }
   ingress {
-  from_port       = 5000
-  to_port         = 5000
-  protocol        = "tcp"
-  security_groups = [aws_security_group.lb_sg.id]
-}
+    from_port       = 5000
+    to_port         = 5000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lb_sg.id]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -78,11 +78,11 @@ resource "aws_security_group" "monitoring_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-  from_port   = 9093
-  to_port     = 9093
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-}
+    from_port   = 9093
+    to_port     = 9093
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
