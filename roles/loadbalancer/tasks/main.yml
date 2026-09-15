@@ -16,13 +16,13 @@
     src: /etc/nginx/sites-available/app
     dest: /etc/nginx/sites-enabled/app
     state: link
-  notify: restart nginx
+  notify: Restart nginx
 
 - name: Remove default Nginx site
   ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
-  notify: restart nginx
+  notify: Restart nginx
 
 - name: Enable and start Nginx
   ansible.builtin.systemd:

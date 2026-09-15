@@ -49,7 +49,7 @@
     owner: prometheus
     group: prometheus
     mode: '0644'
-  notify: restart prometheus
+  notify: Restart prometheus
 
 - name: Deploy prometheus systemd unit
   ansible.builtin.template:
@@ -153,14 +153,14 @@
     src: datasource.yml.j2
     dest: /etc/grafana/provisioning/datasources/prometheus.yml
     mode: '0644'
-  notify: restart grafana
+  notify: Restart grafana
 
 - name: Deploy Grafana dashboard provider config
   ansible.builtin.template:
     src: dashboard-provider.yml.j2
     dest: /etc/grafana/provisioning/dashboards/default.yml
     mode: '0644'
-  notify: restart grafana
+  notify: Restart grafana
 
 - name: Create dashboards directory
   ansible.builtin.file:
@@ -177,4 +177,4 @@
     owner: grafana
     group: grafana
     mode: '0644'
-  notify: restart grafana
+  notify: Restart grafana
