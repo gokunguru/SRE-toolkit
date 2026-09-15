@@ -1,24 +1,24 @@
 ---
 - name: Apply common role to all hosts
   hosts: all
-  become: yes
+  become: true
   roles:
     - common
 
 - name: Apply app role
   hosts: _app
-  become: yes
+  become: true
   roles:
     - app
 
 - name: Apply loadbalancer role
   hosts: _loadbalancer
-  become: yes
+  become: true
   roles:
     - loadbalancer
 
 - name: Apply monitoring role
   hosts: _monitoring
-  become: yes
+  become: true
   roles:
     - monitoring

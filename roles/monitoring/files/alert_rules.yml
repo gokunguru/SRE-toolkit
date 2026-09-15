@@ -1,3 +1,4 @@
+---
 groups:
   - name: node_alerts
     rules:
@@ -7,8 +8,8 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: 'CPU élevé sur {{ $labels.instance }}'
-          description: 'CPU à {{ $value }}% depuis 1 minute'
+          summary: "CPU élevé sur {{ $labels.instance }}"
+          description: "CPU à {{ $value }}% depuis 1 minute"
 
       - alert: InstanceDown
         expr: up == 0
@@ -16,8 +17,8 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: 'Instance {{ $labels.instance }} injoignable'
-          description: 'node_exporter ne répond plus depuis 30s'
+          summary: "Instance {{ $labels.instance }} injoignable"
+          description: "node_exporter ne répond plus depuis 30s"
 
       - alert: HighMemoryUsage
         expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
@@ -25,8 +26,8 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: 'Mémoire élevée sur {{ $labels.instance }}'
-          description: 'RAM utilisée à {{ $value }}%'
+          summary: "Mémoire élevée sur {{ $labels.instance }}"
+          description: "RAM utilisée à {{ $value }}%"
 
       - alert: LowDiskSpace
         expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 15
@@ -34,5 +35,5 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: 'Disque presque plein sur {{ $labels.instance }}'
-          description: 'Espace libre à {{ $value }}%'
+          summary: "Disque presque plein sur {{ $labels.instance }}"
+          description: "Espace libre à {{ $value }}%"

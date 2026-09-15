@@ -6,3 +6,5 @@
 
 # Ansible
 *.retry
+# Ansible cache
+.ansible/
