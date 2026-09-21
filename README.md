@@ -157,3 +157,5 @@ ssh -f -N -i ~/.ssh/<ta-clé>.pem \
 cd terraform
 terraform destroy
 ```
+## Choix de sécurité assumés
+- **Egress restreint aux ports 80/443** (HTTP/HTTPS) plutôt qu'entièrement ouvert, mais tfsec flague toujours `0.0.0.0/0` en egress par principe (`aws-ec2-no-public-egress-sgr`), ignoré explicitement et justifié : les instances doivent atteindre des dépôts publics (apt, GitHub releases) dont les IPs varient, donc un CIDR restreint casserait le déploiement sans NAT Gateway/VPC endpoints (hors scope de ce lab).

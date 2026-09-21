@@ -19,10 +19,18 @@ resource "aws_security_group" "app_sg" {
     protocol        = "tcp"
     security_groups = [aws_security_group.lb_sg.id]
   }
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -48,10 +56,18 @@ resource "aws_security_group" "lb_sg" {
     protocol        = "tcp"
     security_groups = [aws_security_group.monitoring_sg.id]
   }
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -83,11 +99,18 @@ resource "aws_security_group" "monitoring_sg" {
     protocol    = "tcp"
     cidr_blocks = ["${var.my_ip}/32"]
   }
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  #tfsec:ignore:aws-ec2-no-public-egress-sgr
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
