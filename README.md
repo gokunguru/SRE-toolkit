@@ -1,5 +1,7 @@
 # SRE Toolkit
 
+![CI](https://github.com/gokunguru/SRE-toolkit/actions/workflows/ci.yml/badge.svg)
+
 Automatisation d'une stack applicative complète avec provisioning infra as code, configuration management, observabilité et alerting — pensé comme un exercice pratique des pratiques SRE (Site Reliability Engineering).
 
 ## Architecture
